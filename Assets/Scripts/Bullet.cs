@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, distance, whatIsSolid); // нахождение объекта для пробития
         if(hitInfo.collider != null){ //если пуля столкнулась с каким-то коллайдером
             if(hitInfo.collider.CompareTag("Enemy")){ // и у коллайдера тег "Enemy" 
-                // hitInfo.collider.GetComponent<Enemy>().TakeDamage(damage); // наносим урон врагу
+                hitInfo.collider.GetComponent<Enemy>().TakeDamage(damage); // наносим урон врагу
             }
             Destroy(gameObject); //уничтожаем патрон
         }
