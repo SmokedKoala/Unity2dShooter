@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public ControlType controlType;
-    public Joystick joystick;
     public float speed; //скорость игрока
-
-    public enum ControlType{PC, Android}
-
+    public float health;
     private Rigidbody2D rb; // его риджитбоди
     private Vector2 moveInput; // считываение в какую сторону мы движемся
     private Vector2 moveVelocity; //итоговая скорость игрока в каком-то направлении
@@ -21,20 +17,13 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>(); // получаем компонент Rigidbody2D
         anim = GetComponent<Animator>(); //указываем аниматор в стартовой функции
-        if(controlType == ControlType.PC){//если входим в игру в режиме PC - джойстик отключается
-            joystick.gameObject.SetActive(false);
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(controlType == ControlType.PC){
-            moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")); // здесь moveInput считывает горизонтальное и вертикальное значение 
-        }
-        else if(controlType == ControlType.Android){
-            moveInput = new Vector2(joystick.Horizontal, joystick.Vertical); // здесь moveInput считывает горизонтальное и вертикальное значение 
-        }
+       
+        moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")); // здесь moveInput считывает горизонтальное и вертикальное значение 
         moveVelocity = moveInput.normalized * speed;
 
         if(moveInput.x == 0){ //если мы стоим на месте
