@@ -102,3 +102,4 @@ MonoBehaviour:
   whatIsSolid:
     serializedVersion: 2
     m_Bits: 64
+  AttackEffect: {fileID: 6467088604354055892, guid: 8a52932dc95c8cd4f82a4ca19e749119, type: 3}

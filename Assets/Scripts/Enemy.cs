@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     public float speed; // скорость врага
     private Animator anim; // анимация для врага
 
+    public GameObject PlayerEffect;
     private float timeBtwAttack; // добавляем врагу перезарядку
     public float startTimeBtwAttack; // 
     public int damage; // урон врагу
@@ -29,8 +30,9 @@ public class Enemy : MonoBehaviour
             speed = 0;
             stopTime -= Time.deltaTime;
         }
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
         if(health <= 0){ // если у врага не осталось здоровья
+            Instantiate(PlayerEffect, transform.position, Quaternion.identity);
             Destroy(gameObject); // он уничтожается
         }
         transform.Translate(Vector2.left * speed * Time.deltaTime);
@@ -38,7 +40,6 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage) {
         stopTime = startStopTime;
-        //Instantiate(deathEffect, transform.position, Quaternion.identity);
         health -= damage; // вычитаем из здоровья врага урон, который он получает
     }
 
@@ -52,7 +53,7 @@ public class Enemy : MonoBehaviour
         }
     }
     public void OnEnemyAttack(){ // атака врага
-        //Instantiate(deathEffect, player.transform.position, Quaternion.identity);
+        Instantiate(PlayerEffect, player.transform.position, Quaternion.identity);
         player.health -= damage;
         timeBtwAttack = startTimeBtwAttack;
     }

@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     private Vector2 moveInput; // считываение в какую сторону мы движемся
     private Vector2 moveVelocity; //итоговая скорость игрока в каком-то направлении
     private Animator anim; // указываем аниматор    
-
+    public GameObject PlayerEffect;
     private bool facingRight = true; // true когда игрок смотрит вправо
     // Start is called before the first frame update
     void Start()
