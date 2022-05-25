@@ -9,6 +9,8 @@ TagManager:
   - Shield
   - Gun2
   - Weapon
+  - Block
+  - Wall
   layers:
   - Default
   - TransparentFX

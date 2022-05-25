@@ -7,30 +7,35 @@ public class Enemy : MonoBehaviour
     public int health; // здоровье врага
     public float speed; // скорость врага
     public Animator anim; // анимация для врага
-
     public GameObject PlayerEffect;
     private float timeBtwAttack; // добавляем врагу перезарядку
     public float startTimeBtwAttack; // 
     public int damage; // урон врагу
     private float stopTime; //оставнока врага на некоторое время при попадании в него
     public float startStopTime;
-    public float normalSpeed; // обычная скорость врага
+    //public float normalSpeed; // обычная скорость врага
     private Player player;
+
+    [HideInInspector] public bool playerNotInRoom; //гг нет в комнате
+    private bool stoppedEnemy; //остановка врага
 
     private Transform f;
 
     private void Start() {
         anim = GetComponent<Animator>();
         player = FindObjectOfType<Player>();
-        normalSpeed = speed;
     }
     private void Update() { // движение врага на героя
         //чтобы враг останавливался ненанодлго
-        if(stopTime <= 0) {
-            speed = normalSpeed; 
-        } else {
-            speed = 0;
-            stopTime -= Time.deltaTime;
+        if(!playerNotInRoom){
+            if(stopTime <= 0) {
+                stoppedEnemy = false; 
+            } else {
+                stoppedEnemy = true;
+                stopTime -= Time.deltaTime;
+            }
+        }else {
+            stoppedEnemy = true;
         }
         anim = GetComponent<Animator>();
         if(health <= 0){ // если у врага не осталось здоровья
@@ -44,7 +49,9 @@ public class Enemy : MonoBehaviour
         //     transform.eulerAngles = new Vector3(0, 0, 0);
         // }
         //transform.Translate(Vector2.left * speed * Time.deltaTime); // тупо идет влево
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime); //ходит за главным героем
+        if(!stoppedEnemy){
+            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime); //ходит за главным героем
+        }
     }
 
     public void TakeDamage(int damage) {
