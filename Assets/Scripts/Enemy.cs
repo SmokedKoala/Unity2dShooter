@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     public int health; // здоровье врага
     public float speed; // скорость врага
-    private Animator anim; // анимация для врага
+    public Animator anim; // анимация для врага
 
     public GameObject PlayerEffect;
     private float timeBtwAttack; // добавляем врагу перезарядку
@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour
     public float startStopTime;
     public float normalSpeed; // обычная скорость врага
     private Player player;
+
+    private Transform f;
 
     private void Start() {
         anim = GetComponent<Animator>();
@@ -30,12 +32,19 @@ public class Enemy : MonoBehaviour
             speed = 0;
             stopTime -= Time.deltaTime;
         }
-        //anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         if(health <= 0){ // если у врага не осталось здоровья
             Instantiate(PlayerEffect, transform.position, Quaternion.identity);
             Destroy(gameObject); // он уничтожается
         }
-        transform.Translate(Vector2.left * speed * Time.deltaTime);
+
+        // if(player.transform.position.x > transform.position.x){ // если игрок разворачивается
+        //     transform.eulerAngles = new Vector3(0, 180, 0); //враг смотрит в соотв. сторону
+        // } else {
+        //     transform.eulerAngles = new Vector3(0, 0, 0);
+        // }
+        //transform.Translate(Vector2.left * speed * Time.deltaTime); // тупо идет влево
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime); //ходит за главным героем
     }
 
     public void TakeDamage(int damage) {
@@ -46,7 +55,7 @@ public class Enemy : MonoBehaviour
     public void OnTriggerStay2D(Collider2D other) {
         if(other.CompareTag("Player")){
             if(timeBtwAttack <= 0){
-                anim.SetTrigger("EnemyAttack");
+                anim.SetTrigger("enemyAttack");
             }else {
                 timeBtwAttack -= Time.deltaTime;
             }

@@ -14,6 +14,7 @@ public class Bullet : MonoBehaviour
 
     private void Start() {
         camAnim = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Animator>(); //анимация камеры
+        Invoke("DestroyBullet", lifetime);
     }
     private void Update(){
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, distance, whatIsSolid); // нахождение объекта для пробития
@@ -21,10 +22,14 @@ public class Bullet : MonoBehaviour
             if(hitInfo.collider.CompareTag("Enemy")){ // и у коллайдера тег "Enemy" 
                 hitInfo.collider.GetComponent<Enemy>().TakeDamage(damage); // наносим урон врагу
             }
-            Instantiate(AttackEffect, transform.position, Quaternion.identity);
-            camAnim.SetTrigger("shake");
-            Destroy(gameObject); //уничтожаем патрон
+            DestroyBullet();
         }
         transform.Translate(Vector2.up * speed * Time.deltaTime); //двжиение патрона
+    }
+
+    public void DestroyBullet(){
+        Instantiate(AttackEffect, transform.position, Quaternion.identity);
+        camAnim.SetTrigger("shake");
+        Destroy(gameObject); //уничтожаем патрон
     }
 }
