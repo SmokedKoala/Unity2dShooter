@@ -11,6 +11,7 @@ TagManager:
   - Weapon
   - Block
   - Wall
+  - Room
   layers:
   - Default
   - TransparentFX
