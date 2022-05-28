@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Net.Mime;
 using UnityEngine.UI;
 using System.Collections;
@@ -6,6 +7,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public int counter = 0;
+    public GameObject panel;
     public float speed; //скорость игрока
     public float health;
     public Text healthDisplay;
@@ -51,6 +54,7 @@ public class Player : MonoBehaviour
             SwitchWeapons();
         }
         healthDisplay.text = "HP: " + health;
+        end();
     }
 
     void FixedUpdate()
@@ -104,6 +108,13 @@ public class Player : MonoBehaviour
                 weaponIcon.SetNativeSize();
                 break;
             }
+        }
+    }
+
+    private void end(){
+        if (counter == 4)
+        {
+            panel.SetActive(true);
         }
     }
 }

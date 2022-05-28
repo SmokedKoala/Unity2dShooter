@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
     public float startStopTime;
     //public float normalSpeed; // обычная скорость врага
     private Player player;
+    public AudioSource TakeDamageSound;
+
 
     [HideInInspector] public bool playerNotInRoom; //гг нет в комнате
     private bool stoppedEnemy; //остановка врага
@@ -41,6 +43,7 @@ public class Enemy : MonoBehaviour
         if(health <= 0){ // если у врага не осталось здоровья
             Instantiate(PlayerEffect, transform.position, Quaternion.identity);
             Destroy(gameObject); // он уничтожается
+            player.counter ++;
         }
 
         // if(player.transform.position.x > transform.position.x){ // если игрок разворачивается
@@ -57,6 +60,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage) {
         stopTime = startStopTime;
         health -= damage; // вычитаем из здоровья врага урон, который он получает
+        TakeDamageSound.Play();
     }
 
     public void OnTriggerStay2D(Collider2D other) {
